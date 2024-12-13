@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenLayers Map</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css" type="text/css">
+   <link rel="stylesheet" href="styles.css?v=1.0">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,6 +58,23 @@
             background-color: #0056b3;
         }
 
+#controls button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+}
+
+#controls button:hover {
+    background-color: #0056b3;
+}
+
+#limpar {
+    background-color: #FF5733;
+}
+
+#limpar:hover {
+    background-color: #C70039;
+}
         #map {
             width: 100%;
             height: 80vh;
@@ -77,6 +94,7 @@
             display: none;
         }
     </style>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css" type="text/css">
 </head>
 <body>
     <div id="controls">
@@ -98,9 +116,10 @@
         </select>
         <label for="obs">Demandas MP:</label>
         <select id="obs" multiple>
-            <!--<option value="">Todas</option> -->
+            <!-- <option value="">Todas</option> -->
         </select>
         <button id="buscar">Buscar</button>
+        <button id="limpar">Limpar Filtros</button>
     </div>
     <div id="map"></div>
     <div id="tooltip" class="ol-tooltip hidden"></div>

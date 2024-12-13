@@ -94,15 +94,17 @@ function preencherDropdowns(data) {
     const observacoes = new Set();
 
     data.forEach(bairro => {
-        if (bairro.SETOR && bairro.SETOR.trim() !== "") {
+        if (bairro.Obs && bairro.SETOR.trim() !== "") {
             setores.add(bairro.SETOR.toString());
         }
         zonas.add(bairro.ZONA.toString());
         ur1Set.add(bairro['UR-1']);
         bairros.add(bairro.NOME_BAIRR);
+
+        // Verifica se a observação está presente e não é nula
         if (bairro.Obs && bairro.Obs.trim() !== "") {
             observacoes.add(bairro.Obs);
-        }
+        } 
     });
 
     const setorSelect = document.getElementById('setor');
@@ -147,26 +149,14 @@ function preencherDropdowns(data) {
     });
 }
 
-function getSelectedOptions(select) {
-    const result = [];
-    const options = select && select.options;
-    for (let i = 0, len = options.length; i < len; i++) {
-        const opt = options[i];
-        if (opt.selected) {
-            result.push(opt.value || opt.text);
-        }
-    }
-    return result;
-}
-
 // Função para estilizar os bairros filtrados e processo de busca
-function filterBairros(setor, zona, ur1, nomeBairro, obsList) {
+function filterBairros(setor, zona, ur1, nomeBairro, obs) {
     const filteredBairros = dadosBairros.filter(bairro => {
         return (setor === "" || bairro.SETOR.toString() === setor) &&
                (zona === "" || bairro.ZONA.toString() === zona) &&
                (ur1 === "" || bairro['UR-1'] === ur1) &&
                (nomeBairro === "" || bairro.NOME_BAIRR === nomeBairro) &&
-               (obsList.length === 0 || obsList.includes(bairro.Obs));
+               (obs === "" || bairro.Obs === obs);
     });
 
     vectorLayer.setStyle(function(feature) {
@@ -189,18 +179,23 @@ function filterBairros(setor, zona, ur1, nomeBairro, obsList) {
                     width: 1
                 }),
                 fill: new ol.style.Fill({
-                    color: 'rgba(0, 0, 255, 0.1)'
+                    color: 'rgba(0, 0, 255, 0)'
                 })
             });
         }
     });
 }
 
+document.getElementById('limpar').addEventListener('click', function() {
+    location.reload(); // Recarrega a página para limpar todos os filtros
+});
+
+
 document.getElementById('buscar').addEventListener('click', function() {
     const setor = document.getElementById('setor').value;
     const zona = document.getElementById('zona').value;
     const ur1 = document.getElementById('ur1').value;
     const nomeBairro = document.getElementById('nome_bairro').value;
-    const obsList = getSelectedOptions(document.getElementById('obs'));
-    filterBairros(setor, zona, ur1, nomeBairro, obsList);
+    const obs = document.getElementById('obs').value;
+    filterBairros(setor, zona, ur1, nomeBairro, obs);
 });
