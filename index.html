@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenLayers Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #controls {
+            padding: 10px;
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #controls label {
+            margin-right: 5px;
+            font-weight: bold;
+
+            font-size: 10px;
+        }
+
+        #controls select,
+        #controls button {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 10px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #controls select:focus,
+        #controls button:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        #controls button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+        }
+
+        #controls button:hover {
+            background-color: #0056b3;
+        }
+
+        #map {
+            width: 100%;
+            height: 80vh;
+        }
+
+        .ol-tooltip {
+            position: absolute;
+            background-color: white;
+            border: 1px solid black;
+            padding: 5px;
+            border-radius: 4px;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .ol-tooltip.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <label for="setor">Setor:</label>
+        <select id="setor">
+            <option value="">Todos</option>
+        </select>
+        <label for="zona">Zona:</label>
+        <select id="zona">
+            <option value="">Todas</option>
+        </select>
+        <label for="ur1">UR-1:</label>
+        <select id="ur1">
+            <option value="">Todas</option>
+        </select>
+        <label for="nome_bairro">Nome do Bairro:</label>
+        <select id="nome_bairro">
+            <option value="">Todos</option>
+        </select>
+        <label for="obs">Demandas MP:</label>
+        <select id="obs" multiple>
+            <!--<option value="">Todas</option> -->
+        </select>
+        <button id="buscar">Buscar</button>
+    </div>
+    <div id="map"></div>
+    <div id="tooltip" class="ol-tooltip hidden"></div>
+    <!-- Incluindo Proj4js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
+    <!-- Incluindo OpenLayers -->
+    <script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
+    <!-- Referência ao script externo -->
+    <script src="script.js"></script>
+</body>
+</html>

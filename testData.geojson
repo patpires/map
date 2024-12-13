@@ -1,0 +1,37 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Bairro 1" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-38.5075, -12.9722],
+            [-38.5045, -12.9722],
+            [-38.5045, -12.9742],
+            [-38.5075, -12.9742],
+            [-38.5075, -12.9722]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Bairro 2" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-38.5025, -12.9722],
+            [-38.5005, -12.9722],
+            [-38.5005, -12.9742],
+            [-38.5025, -12.9742],
+            [-38.5025, -12.9722]
+          ]
+        ]
+      }
+    }
+  ]
+}
