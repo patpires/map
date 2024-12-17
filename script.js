@@ -150,13 +150,17 @@ function preencherDropdowns(data) {
 }
 
 // Função para estilizar os bairros filtrados e processo de busca
-function filterBairros(setor, zona, ur1, nomeBairro, obs) {
+function filterBairros(setor, zona, ur1, nomeBairro, obsList) {
     const filteredBairros = dadosBairros.filter(bairro => {
-        return (setor === "" || bairro.SETOR.toString() === setor) &&
-               (zona === "" || bairro.ZONA.toString() === zona) &&
-               (ur1 === "" || bairro['UR-1'] === ur1) &&
-               (nomeBairro === "" || bairro.NOME_BAIRR === nomeBairro) &&
-               (obs === "" || bairro.Obs === obs);
+        const setorMatch = (setor === "" || bairro.SETOR.toString() === setor);
+        const zonaMatch = (zona === "" || bairro.ZONA.toString() === zona);
+        const ur1Match = (ur1 === "" || bairro['UR-1'] === ur1);
+        const nomeBairroMatch = (nomeBairro === "" || bairro.NOME_BAIRR === nomeBairro);
+        
+        // Verificar se pelo menos uma observação selecionada está presente no bairro
+        const obsMatch = (obsList.length === 0 || obsList.some(obs => bairro.Obs.includes(obs)));
+
+        return setorMatch && zonaMatch && ur1Match && nomeBairroMatch && obsMatch;
     });
 
     vectorLayer.setStyle(function(feature) {
@@ -179,7 +183,7 @@ function filterBairros(setor, zona, ur1, nomeBairro, obs) {
                     width: 1
                 }),
                 fill: new ol.style.Fill({
-                    color: 'rgba(0, 0, 255, 0)'
+                    color: 'rgba(0, 0, 255, 0.1)'
                 })
             });
         }
@@ -190,12 +194,24 @@ document.getElementById('limpar').addEventListener('click', function() {
     location.reload(); // Recarrega a página para limpar todos os filtros
 });
 
+// Função getSelectedOptions para capturar múltiplas seleções corretamente
+function getSelectedOptions(select) {
+    const result = [];
+    const options = select && select.options;
+    for (let i = 0, len = options.length; i < len; i++) {
+        const opt = options[i];
+        if (opt.selected) {
+            result.push(opt.value || opt.text);
+        }
+    }
+    return result;
+}
 
 document.getElementById('buscar').addEventListener('click', function() {
     const setor = document.getElementById('setor').value;
     const zona = document.getElementById('zona').value;
     const ur1 = document.getElementById('ur1').value;
     const nomeBairro = document.getElementById('nome_bairro').value;
-    const obs = document.getElementById('obs').value;
-    filterBairros(setor, zona, ur1, nomeBairro, obs);
+    const obsList = getSelectedOptions(document.getElementById('obs'));
+    filterBairros(setor, zona, ur1, nomeBairro, obsList);
 });
